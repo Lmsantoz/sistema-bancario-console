@@ -2,8 +2,11 @@ package com.lucasmarques.sistemabancario;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
+
+import static com.lucasmarques.sistemabancario.NatureTransaction.DEPOSIT;
 
 public class Account {
     private final int idAccount;
@@ -52,6 +55,8 @@ public class Account {
         if (depositValue == null || depositValue.signum() == -1) {
             throw new IllegalArgumentException("O valor do deposito deve ser Positivo.");
         }
+        Transaction newTransaction = new Transaction(depositValue, NatureTransaction.DEPOSIT);
+        bankStatement.add(newTransaction);
         System.out.println("Depositando o valor de: " + depositValue);
         setBalance(getBalance().add(depositValue));
     }
@@ -64,6 +69,8 @@ public class Account {
         } else  if (withdrawValue.compareTo(getBalance()) > 0) {
             throw new IllegalArgumentException("Saldo insuficiente.");
         }
+        Transaction newTransactionWithdraw = new Transaction(withdrawValue, NatureTransaction.WITHDRAW);
+        bankStatement.add(newTransactionWithdraw);
         BigDecimal amountWithdraw = getBalance().subtract(withdrawValue);
         setBalance(amountWithdraw);
     }
