@@ -1,6 +1,6 @@
 package com.lucasmarques.sistemabancario;
 
-public enum NatureTransiction {
+public enum NatureTransaction {
     DEPOSIT,
     WITHDRAW,
     TRANSFER
