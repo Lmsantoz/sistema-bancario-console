@@ -35,4 +35,11 @@ public class AccountTest {
         account.deposit(new BigDecimal("100.00"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> account.withdraw(new BigDecimal("200.00")));
     }
+
+    @Test
+    public void validationBankStatement() {
+        Account account = new Account("Lucas", "12345678910");
+        account.deposit(new BigDecimal("100.00"));
+        Assertions.assertEquals(account.getBankStatement().size(), 1);
+    }
 }
