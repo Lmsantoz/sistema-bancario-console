@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.lucasmarques.sistemabancario.NatureTransaction.DEPOSIT;
 
 public class Account {
     private final int idAccount;
@@ -42,30 +41,29 @@ public class Account {
         return bankStatement;
     }
 
-    public void setBalance(BigDecimal balance) {
+    private void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
     @Override
     public String toString() {
-        return "Numero da conta: " + idAccount + "\nName: " + name + "\nCPF: " + cpf;
+        return "Numero da conta: " + idAccount + "\nName: " + name + "\nCPF: " + cpf + "\nBalance: " + balance;
     }
 
     public void deposit(BigDecimal depositValue) {
         if (depositValue == null || depositValue.signum() == -1) {
-            throw new IllegalArgumentException("O valor do deposito deve ser Positivo.");
+            throw new IllegalArgumentException("O valor deve ser Positivo.");
         }
         Transaction newTransaction = new Transaction(depositValue, NatureTransaction.DEPOSIT);
         bankStatement.add(newTransaction);
-        System.out.println("Depositando o valor de: " + depositValue);
         setBalance(getBalance().add(depositValue));
     }
 
     public void withdraw(BigDecimal withdrawValue) {
         if (withdrawValue == null) {
-            throw new IllegalArgumentException("Para realizar o saque o valor preciser válido");
+            throw new IllegalArgumentException("O valor preciser válido");
         } else if (withdrawValue.signum() == -1) {
-            throw new IllegalArgumentException("O valor sacado não deve ser Negativo.");
+            throw new IllegalArgumentException("O valor não deve ser Negativo.");
         } else  if (withdrawValue.compareTo(getBalance()) > 0) {
             throw new IllegalArgumentException("Saldo insuficiente.");
         }
@@ -73,6 +71,12 @@ public class Account {
         bankStatement.add(newTransactionWithdraw);
         BigDecimal amountWithdraw = getBalance().subtract(withdrawValue);
         setBalance(amountWithdraw);
+    }
+
+    public void displayBankStatement() {
+        for (Transaction transaction : bankStatement) {
+            System.out.println(transaction);
+        }
     }
 }
 
