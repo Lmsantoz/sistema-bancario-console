@@ -17,18 +17,6 @@ public class Transaction {
         this.transictionNature = transictionNature;
     }
 
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public NatureTransaction getTransictionNature() {
-        return transictionNature;
-    }
-
     @Override
     public String toString() {
         return "Type: " + transictionNature + " | " + " Value: " + value + " | " + " Date: " + date.format(formatter);
